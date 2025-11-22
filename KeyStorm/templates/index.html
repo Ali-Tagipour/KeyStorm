@@ -1,0 +1,89 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+<div class="card neon">
+    <h1 class="glitch" data-text="KeyStorm">KeyStorm</h1>
+    <p class="subtitle">رمزساز ۱۰۰٪ امن </p>
+
+    <form method="POST" class="form-glow">
+        <input type="text"
+               name="website"
+               placeholder="اسم سایت (مثل Instagram, Gmail, بانک)"
+               required
+               class="input-neon"
+               autocomplete="off" />
+        <input type="number"
+               name="length"
+               value="20"
+               min="8"
+               max="100"
+               class="input-neon" />
+        <button type="submit" class="btn-cyber">
+            تولید رمز امن!
+        </button>
+    </form>
+
+    {% if password %}
+    <div class="result-box neon">
+        <p>رمز تولید شده (کلیک کن تا کپی بشه):</p>
+
+        <div class="password-display"
+             onclick="copyToClipboard('{{ password }}')"
+             title="کلیک کن تا کپی بشه">
+            <input type="text"
+                   value="{{ password }}"
+                   readonly
+                   id="pass"
+                   class="password-field" />
+            <div class="copy-btn">
+                کپی شد!
+            </div>
+        </div>
+
+        <small style="color:#00ffaa; display:block; margin-top:8px;">
+            رمز کاملاً امن و قابل استفاده در همه سایت‌ها
+        </small>
+    </div>
+    {% endif %}
+
+    <a href="/passwords" class="btn-secondary">نمایش همه رمزها</a>
+
+    <div class="portfolio-credit">
+        <small>
+            طراحی شده توسط <strong>A.T</strong> |
+             <a href="http://alitagipour.ir/" target="_blank">علی تقی پور</a>
+        </small>
+    </div>
+</div>
+
+<!-- اسکریپت کپی جدید و ۱۰۰٪ کارکردی (2025) -->
+<script>
+    function copyToClipboard(text) {
+        // روش اصلی جدید (Chrome, Edge, Firefox جدید)
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert("کپی شد !");
+            })
+            .catch(() => {
+                // فال‌بک برای مرورگرهای قدیمی
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                alert("کپی شد!");
+            });
+    }
+
+    // افکت کلیک روی رمز
+    document.querySelectorAll('.password-display').forEach(el => {
+        el.style.cursor = "pointer";
+        el.addEventListener('click', () => {
+            el.style.background = "rgba(0,255,255,0.2)";
+            setTimeout(() => {
+                el.style.background = "";
+            }, 300);
+        });
+    });
+</script>
+{% endblock %}
